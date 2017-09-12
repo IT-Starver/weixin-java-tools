@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import me.chanjar.weixin.common.bean.WxCardApiSignature;
 import me.chanjar.weixin.common.bean.card.WxCard;
 import me.chanjar.weixin.common.bean.result.WxError;
+import me.chanjar.weixin.common.constant.WxErrorCodeConstants;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.util.RandomUtils;
 import me.chanjar.weixin.common.util.crypto.SHA1;
@@ -243,14 +244,12 @@ public class WxMpCardServiceImpl implements WxMpCardService {
         // 判断返回值
         JsonObject json = (new JsonParser()).parse(responseContent).getAsJsonObject();
         String errcode = json.get("errcode").getAsString();
-        if (!"0".equals(errcode)) {
+        if (WxErrorCodeConstants.CODE_SUCCESS == Integer.valueOf(errcode)) {
+            String cardId = json.get("card_id").getAsString();
+            return cardId;
+        } else {
             String errmsg = json.get("errmsg").getAsString();
-            WxError error = new WxError();
-            error.setErrorCode(Integer.valueOf(errcode));
-            error.setErrorMsg(errmsg);
-            throw new WxErrorException(error);
+            throw new WxErrorException(WxError.newBuilder().setErrorCode(Integer.valueOf(errcode)).setErrorMsg(errmsg).build());
         }
-
-        return responseContent;
     }
 }

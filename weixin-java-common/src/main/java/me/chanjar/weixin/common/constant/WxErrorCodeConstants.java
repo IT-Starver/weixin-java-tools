@@ -10,10 +10,11 @@ public class WxErrorCodeConstants {
 
     public static final Map<Integer, String> errorCodeMap = new HashMap<>();
 
+    public static final int CODE_SUCCESS = 0;
 
     static {
         errorCodeMap.put(-1, "系统繁忙，此时请开发者稍候再试");
-        errorCodeMap.put(0, "请求成功");
+        errorCodeMap.put(CODE_SUCCESS, "请求成功");
         errorCodeMap.put(40001, "获取access_token时AppSecret错误，或者access_token无效。请开发者认真比对AppSecret的正确性，或查看是否正在为恰当的公众号调用接口");
         errorCodeMap.put(40002, "不合法的凭证类型");
         errorCodeMap.put(40003, "不合法的OpenID，请开发者确认OpenID（该用户）是否已关注公众号，或是否是其他公众号的OpenID");

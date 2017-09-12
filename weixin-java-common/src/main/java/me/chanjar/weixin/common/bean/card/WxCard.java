@@ -1,6 +1,5 @@
 package me.chanjar.weixin.common.bean.card;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
@@ -40,12 +39,12 @@ public class WxCard implements Serializable {
         return WxGsonBuilder.create().toJson(this);
     }
 
-    public static void main(String[] args) {
-        WxCard wxCard = new WxCard();
-        WxMemberCard wxMemberCard = new WxMemberCard();
-        wxCard.setWxMemberCard(wxMemberCard);
-        Gson gson = new Gson();
-        System.out.println(gson.toJson(wxCard));
-    }
+//    public static void main(String[] args) {
+//        WxCard wxCard = new WxCard();
+//        WxMemberCard wxMemberCard = new WxMemberCard();
+//        wxCard.setWxMemberCard(wxMemberCard);
+//        Gson gson = new Gson();
+//        System.out.println(gson.toJson(wxCard));
+//    }
 
 }
