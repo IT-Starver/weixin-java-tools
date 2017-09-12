@@ -29,7 +29,6 @@ public class WxErrorAdapter implements JsonDeserializer<WxError> {
     if (wxErrorJsonObject.get("errmsg") != null && !wxErrorJsonObject.get("errmsg").isJsonNull()) {
       wxError.setErrorMsg(GsonHelper.getAsString(wxErrorJsonObject.get("errmsg")));
     }
-    wxError.setJson(json.toString());
     return wxError;
   }
 

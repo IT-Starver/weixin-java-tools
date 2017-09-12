@@ -1,6 +1,7 @@
 package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.bean.WxCardApiSignature;
+import me.chanjar.weixin.common.bean.card.WxCard;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.bean.result.WxMpCardResult;
 
@@ -10,6 +11,7 @@ import me.chanjar.weixin.mp.bean.result.WxMpCardResult;
  * @author YuJian(mgcnrx11@hotmail.com) on 01/11/2016
  */
 public interface WxMpCardService {
+  String CARD_CREATE = "https://api.weixin.qq.com/card/create";
   String CARD_GET = "https://api.weixin.qq.com/card/get";
   String CARD_GET_TICKET = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=wx_card";
   String CARD_CODE_DECRYPT = "https://api.weixin.qq.com/card/code/decrypt";
@@ -122,4 +124,12 @@ public interface WxMpCardService {
    * <br> 可由 com.google.gson.JsonParser#parse 等方法直接取JSON串中的某个字段。
    */
   String getCardDetail(String cardId) throws WxErrorException;
+
+  /**
+   * 创建会员卡接口。接口创建会员卡，并获取card_id，用于投放。
+   * @param wxCard
+   * @return
+   * @throws WxErrorException
+     */
+  String createCard(WxCard wxCard) throws WxErrorException;
 }

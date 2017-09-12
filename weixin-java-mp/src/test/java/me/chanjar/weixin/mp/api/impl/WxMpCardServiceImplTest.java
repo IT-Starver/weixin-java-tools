@@ -2,6 +2,9 @@ package me.chanjar.weixin.mp.api.impl;
 
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.bean.WxCardApiSignature;
+import me.chanjar.weixin.common.bean.card.WxCard;
+import me.chanjar.weixin.common.bean.card.WxMemberCard;
+import me.chanjar.weixin.common.bean.card.WxMemberCardBaseInfo;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import me.chanjar.weixin.mp.bean.result.WxMpCardResult;
@@ -87,6 +90,42 @@ public class WxMpCardServiceImplTest {
   @Test
   public void testGetCardDetail() throws Exception {
     String result = this.wxService.getCardService().getCardDetail(this.cardId);
+    assertNotNull(result);
+    System.out.println(result);
+  }
+
+  @Test
+  public void testGetCardCreate() throws Exception {
+    WxCard wxCard = new WxCard();
+    wxCard.setCardType(WxCard.CART_TYPE_MEMBER_CARD);
+    WxMemberCard wxMemberCard = new WxMemberCard();
+    wxMemberCard.setSupplyBonus(true);
+    wxMemberCard.setSupplyBalance(false);
+    wxMemberCard.setPrerogative("test_prerogative");
+    wxMemberCard.setAutoActivate(true);
+
+//    wxMemberCard.setBackgroundPicUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504870988510&di=457feeed7b01512cea141dedc49568eb&imgtype=0&src=http%3A%2F%2Fpic33.nipic.com%2F20130918%2F5978971_202903890000_2.jpg");
+    WxMemberCardBaseInfo baseInfo = new WxMemberCardBaseInfo();
+    baseInfo.setLogoUrl("http://mmbiz.qpic.cn/mmbiz_jpg/zicNf5XQ1YqBtn7mj77vS3HKib3UEkhMQaaTa49VvDaAcvybPHiaAjGjgLTcLg04oM1R3UoBSvZMh9lf56Fj20CQA/0?wx_fmt=jpeg");
+    baseInfo.setBrandName("海底捞");
+    baseInfo.setCodeType(WxMemberCardBaseInfo.CODE_TYPE_TEXT);
+    baseInfo.setTitle("海底捞会员卡");
+    baseInfo.setColor("Color010");
+    baseInfo.setNotice("使用时向服务员出示此券");
+    baseInfo.setServicePhone("020-88888888");
+    baseInfo.setDescription("不可与其他优惠同享");
+    WxMemberCardBaseInfo.DateInfo dateInfo = new WxMemberCardBaseInfo.DateInfo();
+    dateInfo.setType("DATE_TYPE_PERMANENT");
+    baseInfo.setDateInfo(dateInfo);
+
+    WxMemberCardBaseInfo.Sku sku = new WxMemberCardBaseInfo.Sku();
+    sku.setQuantity(50000000);
+    baseInfo.setSku(sku);
+    wxMemberCard.setBaseInfo(baseInfo);
+
+    wxCard.setWxMemberCard(wxMemberCard);
+
+    String result = this.wxService.getCardService().createCard(wxCard);
     assertNotNull(result);
     System.out.println(result);
   }
