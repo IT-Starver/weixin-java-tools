@@ -21,15 +21,43 @@ public class WxMemberCard implements Serializable {
     @SerializedName("advanced_info")
     private WxMemberCardAdvancedInfo advancedInfo;
 
+    /**
+     * <pre>
+     * 是
+     * bool
+     * 显示积分，填写true或false，如填写true，积分相关字段均为必填
+     * </pre>
+     */
     @SerializedName("supply_bonus")
     private Boolean supplyBonus;
 
+    /**
+     * <pre>
+     * 是
+     * bool
+     * 显示积分，填写true或false，如填写true，积分相关字段均为必填。若设置为true则后续不可以被关闭。
+     * </pre>
+     */
     @SerializedName("supply_balance")
     private Boolean supplyBalance;
 
+    /**
+     * <pre>
+     * 是
+     * string(3072)
+     * 会员卡特权说明,限制1024汉字。
+     * </pre>
+     */
     @SerializedName("prerogative")
     private String prerogative;
 
+    /**
+     * <pre>
+     * 否
+     * bool
+     * 设置为true时用户领取会员卡后系统自动将其激活，无需调用激活接口，详情见自动激活。
+     * </pre>
+     */
     @SerializedName("auto_activate")
     private Boolean autoActivate;
 
