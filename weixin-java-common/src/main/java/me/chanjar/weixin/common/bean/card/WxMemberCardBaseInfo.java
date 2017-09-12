@@ -148,6 +148,15 @@ public class WxMemberCardBaseInfo implements Serializable {
      */
     @SerializedName("use_custom_code")
     private String useCustomCode;
+
+
+    /**
+     * <pre>
+     * 填入该字段后，自定义code卡券方可进行导入code并投放的动作。
+     * </pre>
+     */
+    @SerializedName("get_custom_code_mode")
+    private String getCustomCodeMode = "GET_CUSTOM_CODE_MODE_DEPOSIT";
     /**
      * <pre>
      * 否
@@ -401,6 +410,14 @@ public class WxMemberCardBaseInfo implements Serializable {
 
     public void setUseCustomCode(String useCustomCode) {
         this.useCustomCode = useCustomCode;
+    }
+
+    public String getGetCustomCodeMode() {
+        return getCustomCodeMode;
+    }
+
+    public void setGetCustomCodeMode(String getCustomCodeMode) {
+        this.getCustomCodeMode = getCustomCodeMode;
     }
 
     public String getBindOpenid() {

@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMemberCardService;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -12,6 +13,7 @@ import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardActivatedMessage;
 import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUpdateMessage;
 import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUpdateResult;
 import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUserInfoResult;
+import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,8 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
   private static final String MEMBER_CARD_ACTIVATE = "https://api.weixin.qq.com/card/membercard/activate";
   private static final String MEMBER_CARD_USER_INFO_GET = "https://api.weixin.qq.com/card/membercard/userinfo/get";
   private static final String MEMBER_CARD_UPDATE_USER = "https://api.weixin.qq.com/card/membercard/updateuser";
+  private static final String MEMBER_CARD_QRCODE_CREATE = "https://api.weixin.qq.com/card/qrcode/create";
+
 
   private WxMpService wxMpService;
 
@@ -101,4 +105,41 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
       new TypeToken<WxMpMemberCardUpdateResult>() {
       }.getType());
   }
+
+  @Override
+  public WxMpQrCodeTicket qrCodeCreateMemberTicket(String cardId, String code, String openId) throws WxErrorException {
+    if (cardId == null || code == null || openId == null) {
+      throw new WxErrorException(WxError.newBuilder().setErrorCode(-1).setErrorMsg("创建会员卡关键信息为空。").build());
+    }
+
+    JsonObject json = new JsonObject();
+    json.addProperty("action_name", "QR_CARD");
+    json.addProperty("expire_seconds", 1800);
+    JsonObject actionInfo = new JsonObject();
+    json.add("action_info", actionInfo);
+    JsonObject card = new JsonObject();
+    actionInfo.add("card", card);
+    card.addProperty("card_id", cardId);
+    card.addProperty("code", code);
+    card.addProperty("openid", openId);
+    card.addProperty("is_unique_code", false);
+    card.addProperty("outer_str", code);
+    String responseContent = this.wxMpService.post(MEMBER_CARD_QRCODE_CREATE, json.toString());
+    return WxMpQrCodeTicket.fromJson(responseContent);
+  }
+
+//  public static void main(String[] args) {
+//    JsonObject json = new JsonObject();
+//    json.addProperty("action_name", "QR_CARD");
+//    json.addProperty("expire_seconds", 1800);
+//    JsonObject actionInfo = new JsonObject();
+//    json.add("action_info", actionInfo);
+//    JsonObject card = new JsonObject();
+//    actionInfo.add("card", card);
+//    card.addProperty("card_id", "pFS7Fjg8kV1IdDz01r4SQwMkuCKc");
+//    card.addProperty("code", "198374613512");
+//    card.addProperty("openid", "oFS7Fjl0WsZ9AMZqrI80nbIq8xrA");
+//    card.addProperty("is_unique_code", false);
+//    System.out.println(json.toString());
+//  }
 }

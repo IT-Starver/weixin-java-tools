@@ -5,6 +5,7 @@ import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardActivatedMessage;
 import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUpdateMessage;
 import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUpdateResult;
 import me.chanjar.weixin.mp.bean.membercard.WxMpMemberCardUserInfoResult;
+import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 
 /**
  * 会员卡相关接口
@@ -50,4 +51,14 @@ public interface WxMpMemberCardService {
    * @throws WxErrorException 接口调用失败抛出的异常
    */
   WxMpMemberCardUpdateResult updateUserMemberCard(WxMpMemberCardUpdateMessage updateUserMessage) throws WxErrorException;
+
+  /**
+   * 生成会员卡二维码,方便用户领取
+   * @param cardId 会员卡的ID, api创建生成的卡的id。
+   * @param code 会员编号
+   * @param openId 绑定某个用户的openId
+   * @return
+   * @throws WxErrorException
+     */
+  WxMpQrCodeTicket qrCodeCreateMemberTicket(String cardId, String code, String openId) throws WxErrorException;
 }

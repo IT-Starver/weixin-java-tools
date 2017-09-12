@@ -1,5 +1,6 @@
 package me.chanjar.weixin.mp.bean.result;
 
+import com.google.gson.annotations.SerializedName;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.io.Serializable;
@@ -13,8 +14,20 @@ public class WxMpQrCodeTicket implements Serializable {
   private static final long serialVersionUID = 5777119669111011584L;
 
   protected String ticket;
-  protected int expire_seconds = -1;
+
+  @SerializedName("expire_seconds")
+  protected int expireSeconds = 1;
+
   protected String url;
+
+  @SerializedName("errcode")
+  private String errCode;
+
+  @SerializedName("errmsg")
+  private String errMsg;
+
+  @SerializedName("show_qrcode_url")
+  private String showQrcodeUrl;
 
   public static WxMpQrCodeTicket fromJson(String json) {
     return WxMpGsonBuilder.INSTANCE.create().fromJson(json, WxMpQrCodeTicket.class);
@@ -29,14 +42,14 @@ public class WxMpQrCodeTicket implements Serializable {
   }
 
   /**
-   * 如果返回-1说明是永久
+   * 如果返回1说明是永久
    */
-  public int getExpire_seconds() {
-    return this.expire_seconds;
+  public int getExpireSeconds() {
+    return this.expireSeconds;
   }
 
-  public void setExpire_seconds(int expire_seconds) {
-    this.expire_seconds = expire_seconds;
+  public void setExpireSeconds(int expireSeconds) {
+    this.expireSeconds = expireSeconds;
   }
 
   public String getUrl() {
@@ -45,6 +58,34 @@ public class WxMpQrCodeTicket implements Serializable {
 
   public void setUrl(String url) {
     this.url = url;
+  }
+
+  public static long getSerialVersionUID() {
+    return serialVersionUID;
+  }
+
+  public String getErrCode() {
+    return errCode;
+  }
+
+  public void setErrCode(String errCode) {
+    this.errCode = errCode;
+  }
+
+  public String getErrMsg() {
+    return errMsg;
+  }
+
+  public void setErrMsg(String errMsg) {
+    this.errMsg = errMsg;
+  }
+
+  public String getShowQrcodeUrl() {
+    return showQrcodeUrl;
+  }
+
+  public void setShowQrcodeUrl(String showQrcodeUrl) {
+    this.showQrcodeUrl = showQrcodeUrl;
   }
 
   @Override
