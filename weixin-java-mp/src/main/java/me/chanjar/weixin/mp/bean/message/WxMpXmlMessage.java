@@ -203,6 +203,19 @@ public class WxMpXmlMessage implements Serializable {
   private String isRestoreMemberCard;
 
   /**
+   * 是否可以共享给朋友
+   */
+  @XStreamAlias("IsRecommendByFriend")
+  private String isRecommendByFriend;
+
+  /**
+   * 来源场景
+   */
+  @XStreamAlias("SourceScene")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String sourceScene;
+
+  /**
    * <pre>
    * 领取场景值，用于领取渠道数据统计。可在生成二维码接口及添加Addcard接口中自定义该字段的字符串值。
    * 核销卡券时：开发者发起核销时传入的自定义参数，用于进行核销渠道统计
@@ -991,6 +1004,22 @@ public class WxMpXmlMessage implements Serializable {
 
   public void setIsRestoreMemberCard(String isRestoreMemberCard) {
     this.isRestoreMemberCard = isRestoreMemberCard;
+  }
+
+  public String getIsRecommendByFriend() {
+    return isRecommendByFriend;
+  }
+
+  public void setIsRecommendByFriend(String isRecommendByFriend) {
+    this.isRecommendByFriend = isRecommendByFriend;
+  }
+
+  public String getSourceScene() {
+    return sourceScene;
+  }
+
+  public void setSourceScene(String sourceScene) {
+    this.sourceScene = sourceScene;
   }
 
   public String getOuterStr() {

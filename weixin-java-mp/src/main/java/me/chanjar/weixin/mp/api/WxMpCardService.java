@@ -1,5 +1,6 @@
 package me.chanjar.weixin.mp.api;
 
+import com.google.gson.JsonObject;
 import me.chanjar.weixin.common.bean.WxCardApiSignature;
 import me.chanjar.weixin.common.bean.card.WxCard;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -13,6 +14,7 @@ import me.chanjar.weixin.mp.bean.result.WxMpCardResult;
 public interface WxMpCardService {
   String CARD_CREATE = "https://api.weixin.qq.com/card/create";
   String CARD_GET = "https://api.weixin.qq.com/card/get";
+  String CARD_DELETE = "https://api.weixin.qq.com/card/delete";
   String CARD_GET_TICKET = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=wx_card";
   String CARD_CODE_DECRYPT = "https://api.weixin.qq.com/card/code/decrypt";
   String CARD_CODE_GET = "https://api.weixin.qq.com/card/code/get";
@@ -132,4 +134,12 @@ public interface WxMpCardService {
    * @throws WxErrorException
      */
   String createCard(WxCard wxCard) throws WxErrorException;
+
+  /**
+   * 删除卡券接口。
+   * @param cardId card_id
+   * @return
+   * @throws WxErrorException
+   */
+  JsonObject deleteCard(String cardId) throws WxErrorException;
 }

@@ -89,6 +89,26 @@ public class WxConsts {
   public static final String EVT_TEMPLATESENDJOBFINISH = "TEMPLATESENDJOBFINISH";
   public static final String EVT_ENTER_AGENT = "enter_agent";
 
+  /**
+   * 用户领卡
+   */
+  public static final String EVT_USER_GET_CARD = "user_get_card";
+
+  /**
+   * 用户查看卡
+   */
+  public static final String EVT_USER_VIEW_CARD = "user_view_card";
+
+  /**
+   * 用户激活卡
+   */
+  public static final String EVT_SUBMIT_MEMBERCARD_USER_INFO = "submit_membercard_user_info";
+
+  /**
+   * 用户删除卡
+   */
+  public static final String EVT_USER_DEL_CARD = "user_del_card";
+
   ///////////////////////
   // 上传多媒体文件的类型
   ///////////////////////

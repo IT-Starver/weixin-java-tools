@@ -1,5 +1,6 @@
 package me.chanjar.weixin.mp.api.impl;
 
+import com.google.gson.JsonObject;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.bean.WxCardApiSignature;
 import me.chanjar.weixin.common.bean.card.WxCard;
@@ -95,6 +96,14 @@ public class WxMpCardServiceImplTest {
   }
 
   @Test
+  public void testDeleteCard() throws Exception {
+    JsonObject result = this.wxService.getCardService().deleteCard("pbjp9vz6bB3B5okHZa7xrf7yT8FQ");
+    assertNotNull(result);
+    System.out.println(result.toString());
+  }
+
+
+  @Test
   public void testGetCardCreate() throws Exception {
     WxCard wxCard = new WxCard();
     wxCard.setCardType(WxCard.CART_TYPE_MEMBER_CARD);
@@ -110,7 +119,7 @@ public class WxMpCardServiceImplTest {
     baseInfo.setBrandName("螳螂健身");
     baseInfo.setCodeType(WxMemberCardBaseInfo.CODE_TYPE_TEXT);
     baseInfo.setTitle("螳螂健身金卡会员");
-    baseInfo.setColor("Color010");
+    baseInfo.setColor("Color020");
     baseInfo.setNotice("使用时请向服务员出示此券。");
     baseInfo.setServicePhone("020-88881111");
     baseInfo.setDescription("如遇到其他优惠,不可与其他优惠同享。");

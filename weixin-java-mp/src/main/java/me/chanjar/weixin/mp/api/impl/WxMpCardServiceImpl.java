@@ -252,4 +252,12 @@ public class WxMpCardServiceImpl implements WxMpCardService {
             throw new WxErrorException(WxError.newBuilder().setErrorCode(Integer.valueOf(errcode)).setErrorMsg(errmsg).build());
         }
     }
+
+    @Override
+    public JsonObject deleteCard(String cardId) throws WxErrorException {
+        String responseContent = this.wxMpService.post(CARD_DELETE, "{\"card_id\":\"" + cardId + "\"}");
+        // 判断返回值
+        JsonObject json = (new JsonParser()).parse(responseContent).getAsJsonObject();
+        return json;
+    }
 }
