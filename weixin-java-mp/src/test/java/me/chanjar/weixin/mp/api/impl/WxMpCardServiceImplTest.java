@@ -107,19 +107,20 @@ public class WxMpCardServiceImplTest {
 //    wxMemberCard.setBackgroundPicUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504870988510&di=457feeed7b01512cea141dedc49568eb&imgtype=0&src=http%3A%2F%2Fpic33.nipic.com%2F20130918%2F5978971_202903890000_2.jpg");
     WxMemberCardBaseInfo baseInfo = new WxMemberCardBaseInfo();
     baseInfo.setLogoUrl("http://mmbiz.qpic.cn/mmbiz_jpg/zicNf5XQ1YqBtn7mj77vS3HKib3UEkhMQaaTa49VvDaAcvybPHiaAjGjgLTcLg04oM1R3UoBSvZMh9lf56Fj20CQA/0?wx_fmt=jpeg");
-    baseInfo.setBrandName("海底捞");
+    baseInfo.setBrandName("螳螂健身");
     baseInfo.setCodeType(WxMemberCardBaseInfo.CODE_TYPE_TEXT);
-    baseInfo.setTitle("海底捞会员卡");
+    baseInfo.setTitle("螳螂健身金卡会员");
     baseInfo.setColor("Color010");
-    baseInfo.setNotice("使用时向服务员出示此券");
-    baseInfo.setServicePhone("020-88888888");
-    baseInfo.setDescription("不可与其他优惠同享");
+    baseInfo.setNotice("使用时请向服务员出示此券。");
+    baseInfo.setServicePhone("020-88881111");
+    baseInfo.setDescription("如遇到其他优惠,不可与其他优惠同享。");
+    baseInfo.setUseCustomCode(true);
     WxMemberCardBaseInfo.DateInfo dateInfo = new WxMemberCardBaseInfo.DateInfo();
     dateInfo.setType("DATE_TYPE_PERMANENT");
     baseInfo.setDateInfo(dateInfo);
 
     WxMemberCardBaseInfo.Sku sku = new WxMemberCardBaseInfo.Sku();
-    sku.setQuantity(50000000);
+    sku.setQuantity(10);
     baseInfo.setSku(sku);
     wxMemberCard.setBaseInfo(baseInfo);
 

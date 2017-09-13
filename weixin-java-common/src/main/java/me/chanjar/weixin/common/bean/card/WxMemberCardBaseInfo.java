@@ -147,7 +147,7 @@ public class WxMemberCardBaseInfo implements Serializable {
      * </pre>
      */
     @SerializedName("use_custom_code")
-    private String useCustomCode;
+    private Boolean useCustomCode = false;
 
 
     /**
@@ -156,7 +156,7 @@ public class WxMemberCardBaseInfo implements Serializable {
      * </pre>
      */
     @SerializedName("get_custom_code_mode")
-    private String getCustomCodeMode = "GET_CUSTOM_CODE_MODE_DEPOSIT";
+    private String getCustomCodeMode;
     /**
      * <pre>
      * 否
@@ -165,7 +165,7 @@ public class WxMemberCardBaseInfo implements Serializable {
      * </pre>
      */
     @SerializedName("bind_openid")
-    private String bindOpenid;
+    private Boolean bindOpenid;
     /**
      * <pre>
      * 否
@@ -192,7 +192,7 @@ public class WxMemberCardBaseInfo implements Serializable {
      * </pre>
      */
     @SerializedName("use_all_locations")
-    private String useAllLocations;
+    private Boolean useAllLocations;
     /**
      * <pre>
      * 否
@@ -291,7 +291,7 @@ public class WxMemberCardBaseInfo implements Serializable {
      * </pre>
      */
     @SerializedName("can_share")
-    private String canShare;
+    private Boolean canShare;
     /**
      * <pre>
      * 否
@@ -300,7 +300,7 @@ public class WxMemberCardBaseInfo implements Serializable {
      * </pre>
      */
     @SerializedName("can_give_friend")
-    private String canGiveFriend;
+    private Boolean canGiveFriend;
 
     /**
      * <pre>
@@ -310,7 +310,7 @@ public class WxMemberCardBaseInfo implements Serializable {
      * </pre>
      */
     @SerializedName("need_push_on_view")
-    private String needPushOnView;
+    private Boolean needPushOnView;
 
     /**
      * <pre>
@@ -322,14 +322,6 @@ public class WxMemberCardBaseInfo implements Serializable {
     @SerializedName("date_info")
     private DateInfo dateInfo;
 
-
-    public DateInfo getDateInfo() {
-        return dateInfo;
-    }
-
-    public void setDateInfo(DateInfo dateInfo) {
-        this.dateInfo = dateInfo;
-    }
 
     public String getLogoUrl() {
         return logoUrl;
@@ -403,12 +395,19 @@ public class WxMemberCardBaseInfo implements Serializable {
         this.description = description;
     }
 
+    public Sku getSku() {
+        return sku;
+    }
 
-    public String getUseCustomCode() {
+    public void setSku(Sku sku) {
+        this.sku = sku;
+    }
+
+    public Boolean getUseCustomCode() {
         return useCustomCode;
     }
 
-    public void setUseCustomCode(String useCustomCode) {
+    public void setUseCustomCode(Boolean useCustomCode) {
         this.useCustomCode = useCustomCode;
     }
 
@@ -420,11 +419,11 @@ public class WxMemberCardBaseInfo implements Serializable {
         this.getCustomCodeMode = getCustomCodeMode;
     }
 
-    public String getBindOpenid() {
+    public Boolean getBindOpenid() {
         return bindOpenid;
     }
 
-    public void setBindOpenid(String bindOpenid) {
+    public void setBindOpenid(Boolean bindOpenid) {
         this.bindOpenid = bindOpenid;
     }
 
@@ -436,14 +435,6 @@ public class WxMemberCardBaseInfo implements Serializable {
         this.servicePhone = servicePhone;
     }
 
-    public Sku getSku() {
-        return sku;
-    }
-
-    public void setSku(Sku sku) {
-        this.sku = sku;
-    }
-
     public List<Integer> getLocationIdList() {
         return locationIdList;
     }
@@ -452,11 +443,11 @@ public class WxMemberCardBaseInfo implements Serializable {
         this.locationIdList = locationIdList;
     }
 
-    public String getUseAllLocations() {
+    public Boolean getUseAllLocations() {
         return useAllLocations;
     }
 
-    public void setUseAllLocations(String useAllLocations) {
+    public void setUseAllLocations(Boolean useAllLocations) {
         this.useAllLocations = useAllLocations;
     }
 
@@ -540,28 +531,36 @@ public class WxMemberCardBaseInfo implements Serializable {
         this.getLimit = getLimit;
     }
 
-    public String getCanShare() {
+    public Boolean getCanShare() {
         return canShare;
     }
 
-    public void setCanShare(String canShare) {
+    public void setCanShare(Boolean canShare) {
         this.canShare = canShare;
     }
 
-    public String getCanGiveFriend() {
+    public Boolean getCanGiveFriend() {
         return canGiveFriend;
     }
 
-    public void setCanGiveFriend(String canGiveFriend) {
+    public void setCanGiveFriend(Boolean canGiveFriend) {
         this.canGiveFriend = canGiveFriend;
     }
 
-    public String getNeedPushOnView() {
+    public Boolean getNeedPushOnView() {
         return needPushOnView;
     }
 
-    public void setNeedPushOnView(String needPushOnView) {
+    public void setNeedPushOnView(Boolean needPushOnView) {
         this.needPushOnView = needPushOnView;
+    }
+
+    public DateInfo getDateInfo() {
+        return dateInfo;
+    }
+
+    public void setDateInfo(DateInfo dateInfo) {
+        this.dateInfo = dateInfo;
     }
 
     public static class SwipeCard {
