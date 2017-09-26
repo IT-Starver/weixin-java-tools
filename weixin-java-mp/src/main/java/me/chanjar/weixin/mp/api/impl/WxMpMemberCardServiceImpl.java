@@ -122,24 +122,10 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
     card.addProperty("card_id", cardId);
     card.addProperty("code", code);
     card.addProperty("openid", openId);
-    card.addProperty("is_unique_code", false);
+    card.addProperty("is_unique_code", true);
     card.addProperty("outer_str", code);
     String responseContent = this.wxMpService.post(MEMBER_CARD_QRCODE_CREATE, json.toString());
     return WxMpQrCodeTicket.fromJson(responseContent);
   }
 
-//  public static void main(String[] args) {
-//    JsonObject json = new JsonObject();
-//    json.addProperty("action_name", "QR_CARD");
-//    json.addProperty("expire_seconds", 1800);
-//    JsonObject actionInfo = new JsonObject();
-//    json.add("action_info", actionInfo);
-//    JsonObject card = new JsonObject();
-//    actionInfo.add("card", card);
-//    card.addProperty("card_id", "pFS7Fjg8kV1IdDz01r4SQwMkuCKc");
-//    card.addProperty("code", "198374613512");
-//    card.addProperty("openid", "oFS7Fjl0WsZ9AMZqrI80nbIq8xrA");
-//    card.addProperty("is_unique_code", false);
-//    System.out.println(json.toString());
-//  }
 }

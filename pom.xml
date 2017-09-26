@@ -241,19 +241,19 @@
     <!--</repository>-->
   <!--</distributionManagement>-->
     <!-- maven 私服地址 -->
-    <distributionManagement>
+  <distributionManagement>
+    <repository>
+      <id>nexus-releases</id>
+      <name>nexus-releases</name>
+      <url>http://101.201.198.122:8081/nexus/content/groups/public</url>
+    </repository>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <name>nexus-snapshots</name>
+      <url>http://101.201.198.122:8081/nexus/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>snapshots</name>
-            <url>http://101.201.198.122:8081/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
-      <repository>
-        <id>releases</id>
-        <name>releases</name>
-        <url>http://101.201.198.122:8081/nexus/content/repositories/releases</url>
-      </repository>
-    </distributionManagement>
 
   <profiles>
     <profile>

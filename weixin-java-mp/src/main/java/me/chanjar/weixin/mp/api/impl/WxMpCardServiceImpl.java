@@ -30,6 +30,18 @@ public class WxMpCardServiceImpl implements WxMpCardService {
 
     private final Logger log = LoggerFactory.getLogger(WxMpCardServiceImpl.class);
 
+    private final String CARD_CREATE = "https://api.weixin.qq.com/card/create";
+    private final String CARD_GET = "https://api.weixin.qq.com/card/get";
+    private final String CARD_DELETE = "https://api.weixin.qq.com/card/delete";
+    private final String CARD_GET_TICKET = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=wx_card";
+    private final String CARD_CODE_DECRYPT = "https://api.weixin.qq.com/card/code/decrypt";
+    private final String CARD_CODE_GET = "https://api.weixin.qq.com/card/code/get";
+    private final String CARD_CODE_CONSUME = "https://api.weixin.qq.com/card/code/consume";
+    private final String CARD_CODE_MARK = "https://api.weixin.qq.com/card/code/mark";
+    private final String CARD_CODE_UNAVAILABLE = "https://api.weixin.qq.com/card/code/unavailable";
+    private final String CARD_MPNEWS_GETHTML = "https://api.weixin.qq.com/card/mpnews/gethtml";
+
+
     private WxMpService wxMpService;
 
     public WxMpCardServiceImpl(WxMpService wxMpService) {
@@ -219,23 +231,14 @@ public class WxMpCardServiceImpl implements WxMpCardService {
     }
 
     @Override
-    public String getCardDetail(String cardId) throws WxErrorException {
+    public JsonObject getCardDetail(String cardId) throws WxErrorException {
         JsonObject param = new JsonObject();
         param.addProperty("card_id", cardId);
         String responseContent = this.wxMpService.post(CARD_GET, param.toString());
 
         // 判断返回值
         JsonObject json = (new JsonParser()).parse(responseContent).getAsJsonObject();
-        String errcode = json.get("errcode").getAsString();
-        if (!"0".equals(errcode)) {
-            String errmsg = json.get("errmsg").getAsString();
-            WxError error = new WxError();
-            error.setErrorCode(Integer.valueOf(errcode));
-            error.setErrorMsg(errmsg);
-            throw new WxErrorException(error);
-        }
-
-        return responseContent;
+        return json;
     }
 
     @Override
@@ -256,6 +259,24 @@ public class WxMpCardServiceImpl implements WxMpCardService {
     @Override
     public JsonObject deleteCard(String cardId) throws WxErrorException {
         String responseContent = this.wxMpService.post(CARD_DELETE, "{\"card_id\":\"" + cardId + "\"}");
+        // 判断返回值
+        JsonObject json = (new JsonParser()).parse(responseContent).getAsJsonObject();
+        return json;
+    }
+
+    @Override
+    public JsonObject unavailableCard(String cardId, String userCardCode) throws WxErrorException {
+        String responseContent = this.wxMpService.post(CARD_CODE_UNAVAILABLE,
+                "{\"code\": \"" + userCardCode + "\",  \"card_id\": \"" + cardId + "\"}");
+        // 判断返回值
+        JsonObject json = (new JsonParser()).parse(responseContent).getAsJsonObject();
+        return json;
+    }
+
+    @Override
+    public JsonObject mpNewsGetHtml(String cardId) throws WxErrorException {
+        String responseContent = this.wxMpService.post(CARD_MPNEWS_GETHTML,
+                "{\"card_id\": \"" + cardId + "\"}");
         // 判断返回值
         JsonObject json = (new JsonParser()).parse(responseContent).getAsJsonObject();
         return json;

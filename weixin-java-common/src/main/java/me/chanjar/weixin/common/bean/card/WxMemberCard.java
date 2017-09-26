@@ -61,6 +61,23 @@ public class WxMemberCard implements Serializable {
     @SerializedName("auto_activate")
     private Boolean autoActivate;
 
+    /**
+     * 否
+     * 设置为true时，该卡将支持一键开卡详情见一键开卡。
+     * 该选项与activate_url互斥。
+     */
+    @SerializedName("wx_activate")
+    private Boolean wxActivate;
+
+    /**
+     * 否
+     * string（128）激活会员卡的url。
+     */
+    @SerializedName("activate_url")
+    private String activateUrl;
+
+
+
     @SerializedName("custom_field1")
     private CustomField customField1;
 
@@ -93,12 +110,6 @@ public class WxMemberCard implements Serializable {
     @SerializedName("balance_rules")
     private String balanceRules;
 
-    /**
-     * 否
-     * string（128）激活会员卡的url。
-     */
-    @SerializedName("activate_url")
-    private String activateUrl;
 
     /**
      * 积分规则
@@ -160,6 +171,14 @@ public class WxMemberCard implements Serializable {
 
     public void setAutoActivate(Boolean autoActivate) {
         this.autoActivate = autoActivate;
+    }
+
+    public Boolean getWxActivate() {
+        return wxActivate;
+    }
+
+    public void setWxActivate(Boolean wxActivate) {
+        this.wxActivate = wxActivate;
     }
 
     public CustomField getCustomField1() {
