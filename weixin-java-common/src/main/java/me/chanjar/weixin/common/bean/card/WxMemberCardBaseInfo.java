@@ -282,7 +282,7 @@ public class WxMemberCardBaseInfo implements Serializable {
      * </pre>
      */
     @SerializedName("get_limit")
-    private String getLimit;
+    private Integer getLimit;
     /**
      * <pre>
      * 否
@@ -523,11 +523,11 @@ public class WxMemberCardBaseInfo implements Serializable {
         this.promotionUrlSubTitle = promotionUrlSubTitle;
     }
 
-    public String getGetLimit() {
+    public Integer getGetLimit() {
         return getLimit;
     }
 
-    public void setGetLimit(String getLimit) {
+    public void setGetLimit(Integer getLimit) {
         this.getLimit = getLimit;
     }
 
@@ -563,7 +563,7 @@ public class WxMemberCardBaseInfo implements Serializable {
         this.dateInfo = dateInfo;
     }
 
-    public static class SwipeCard {
+    public static class SwipeCard implements Serializable{
 
 
         /**
@@ -603,7 +603,7 @@ public class WxMemberCardBaseInfo implements Serializable {
         }
     }
 
-    public static class DateInfo {
+    public static class DateInfo implements Serializable{
 
         /**
          * <pre>
@@ -692,7 +692,7 @@ public class WxMemberCardBaseInfo implements Serializable {
         }
     }
 
-    public static class Sku {
+    public static class Sku implements Serializable{
 
         /**
          * <pre>

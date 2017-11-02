@@ -19,7 +19,7 @@ public class WxMpShortUrlAPITest {
   protected WxMpService wxService;
 
   public void testShortUrl() throws WxErrorException {
-    String shortUrl = this.wxService.shortUrl("www.baidu.com");
+    String shortUrl = this.wxService.shortUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa1b7724d974ee24d&redirect_uri=http%3A%2F%2Fwx.bjmantis.net&response_type=code&scope=snsapi_base&state=123#wechat_redirect");
     Assert.assertNotNull(shortUrl);
   }
 

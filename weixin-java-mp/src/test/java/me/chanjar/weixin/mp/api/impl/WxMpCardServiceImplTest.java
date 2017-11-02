@@ -99,8 +99,9 @@ public class WxMpCardServiceImplTest {
 
     @Test
     public void testDeleteCard() throws Exception {
-        JsonObject result = this.wxService.getCardService().deleteCard("pbjp9v8_8dsGNgFY9JadRyoFkqdQ");
+        JsonObject result = this.wxService.getCardService().deleteCard("pbjp9vx51iKBPt7rYb0qOnBtPHgY");
         assertNotNull(result);
+        result.get("errcode");
         System.out.println(result.toString());
     }
 
@@ -148,14 +149,14 @@ public class WxMpCardServiceImplTest {
         WxMemberCardBaseInfo.DateInfo dateInfo = new WxMemberCardBaseInfo.DateInfo();
         dateInfo.setType("DATE_TYPE_PERMANENT");
         baseInfo.setDateInfo(dateInfo);
-        baseInfo.setGetLimit("1");
+        baseInfo.setGetLimit(1);
         baseInfo.setPromotionUrl("营销入口1");
         baseInfo.setPromotionUrl("http://www.qq.com");
         baseInfo.setNeedPushOnView(true);
         baseInfo.setCodeType("CODE_TYPE_QRCODE");
         baseInfo.setUseAllLocations(true);
         baseInfo.setCustomUrlName("专属客服");
-        baseInfo.setCustomUrl("");
+        baseInfo.setCustomUrl("www.qq.com");
         WxMemberCardBaseInfo.Sku sku = new WxMemberCardBaseInfo.Sku();
         sku.setQuantity(10);
         baseInfo.setSku(sku);

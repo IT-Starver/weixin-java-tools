@@ -253,7 +253,7 @@ public class WxMemberCard implements Serializable {
         this.bonusRule = bonusRule;
     }
 
-    public static class CustomField {
+    public static class CustomField implements Serializable{
 
         @SerializedName("name_type")
         private String nameType;
@@ -261,12 +261,23 @@ public class WxMemberCard implements Serializable {
         @SerializedName("url")
         private String url;
 
+        @SerializedName("name")
+        private String name;
+
         public String getNameType() {
             return nameType;
         }
 
         public void setNameType(String nameType) {
             this.nameType = nameType;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
 
         public String getUrl() {
@@ -278,7 +289,7 @@ public class WxMemberCard implements Serializable {
         }
     }
 
-    public static class BonusRule {
+    public static class BonusRule implements Serializable {
 
         @SerializedName("cost_money_unit")
         private Integer costMoneyUnit;
