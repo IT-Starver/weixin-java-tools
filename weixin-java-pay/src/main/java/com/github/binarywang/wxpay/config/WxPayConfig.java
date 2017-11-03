@@ -43,6 +43,7 @@ public class WxPayConfig {
   private Integer httpProxyPort;
   private String httpProxyUsername;
   private String httpProxyPassword;
+  private String spbillCreateIp;
 
   public String getKeyPath() {
     return keyPath;
@@ -262,5 +263,13 @@ public class WxPayConfig {
 
   public void setHttpProxyPassword(String httpProxyPassword) {
     this.httpProxyPassword = httpProxyPassword;
+  }
+
+  public String getSpbillCreateIp() {
+    return spbillCreateIp;
+  }
+
+  public void setSpbillCreateIp(String spbillCreateIp) {
+    this.spbillCreateIp = spbillCreateIp;
   }
 }

@@ -184,10 +184,10 @@ public class WxPayServiceAbstractImplTest {
   @Test
   public void testEntPay() throws WxPayException {
     WxEntPayRequest request = WxEntPayRequest.newBuilder()
-      .partnerTradeNo("Eb6Aep7uVTdbkJqrP4")
-      .openid("ojOQA0y9o-Eb6Aep7uVTdbkJqrP4")
+      .partnerTradeNo("20171101173500100000001108")
+      .openid("objp9v-KNVzZTAE-7tCy0H7Yb9A4")
       .amount(1)
-      .spbillCreateIp("10.10.10.10")
+      .spbillCreateIp("127.0.0.1")
       .checkName(WxPayConstants.CheckNameOption.NO_CHECK)
       .description("描述信息")
       .build();
