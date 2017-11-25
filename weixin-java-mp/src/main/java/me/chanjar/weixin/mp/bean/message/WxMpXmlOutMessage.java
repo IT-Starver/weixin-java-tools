@@ -12,115 +12,152 @@ import java.io.Serializable;
 
 @XStreamAlias("xml")
 public abstract class WxMpXmlOutMessage implements Serializable {
-  private static final long serialVersionUID = -381382011286216263L;
+    private static final long serialVersionUID = -381382011286216263L;
 
-  @XStreamAlias("ToUserName")
-  @XStreamConverter(value = XStreamCDataConverter.class)
-  protected String toUserName;
+    /**
+     * 是	接收方帐号（收到的OpenID）
+     */
+    @XStreamAlias("ToUserName")
+    @XStreamConverter(value = XStreamCDataConverter.class)
+    protected String toUserName;
 
-  @XStreamAlias("FromUserName")
-  @XStreamConverter(value = XStreamCDataConverter.class)
-  protected String fromUserName;
+    /**
+     * 是	开发者微信号
+     */
+    @XStreamAlias("FromUserName")
+    @XStreamConverter(value = XStreamCDataConverter.class)
+    protected String fromUserName;
 
-  @XStreamAlias("CreateTime")
-  protected Long createTime;
+    /**
+     * 是	消息创建时间 （整型）
+     */
+    @XStreamAlias("CreateTime")
+    protected Long createTime;
 
-  @XStreamAlias("MsgType")
-  @XStreamConverter(value = XStreamCDataConverter.class)
-  protected String msgType;
+    /**
+     * 是	news
+     */
+    @XStreamAlias("MsgType")
+    @XStreamConverter(value = XStreamCDataConverter.class)
+    protected String msgType;
 
-  /**
-   * 获得文本消息builder
-   */
-  public static TextBuilder TEXT() {
-    return new TextBuilder();
-  }
+    /**
+     * 获得文本消息builder
+     */
+    public static TextBuilder TEXT() {
+        return new TextBuilder();
+    }
 
-  /**
-   * 获得图片消息builder
-   */
-  public static ImageBuilder IMAGE() {
-    return new ImageBuilder();
-  }
+    /**
+     * 获得图片消息builder
+     */
+    public static ImageBuilder IMAGE() {
+        return new ImageBuilder();
+    }
 
-  /**
-   * 获得语音消息builder
-   */
-  public static VoiceBuilder VOICE() {
-    return new VoiceBuilder();
-  }
+    /**
+     * 获得语音消息builder
+     */
+    public static VoiceBuilder VOICE() {
+        return new VoiceBuilder();
+    }
 
-  /**
-   * 获得视频消息builder
-   */
-  public static VideoBuilder VIDEO() {
-    return new VideoBuilder();
-  }
+    /**
+     * 获得视频消息builder
+     */
+    public static VideoBuilder VIDEO() {
+        return new VideoBuilder();
+    }
 
-  /**
-   * 获得音乐消息builder
-   */
-  public static MusicBuilder MUSIC() {
-    return new MusicBuilder();
-  }
+    /**
+     * 获得音乐消息builder
+     */
+    public static MusicBuilder MUSIC() {
+        return new MusicBuilder();
+    }
 
-  /**
-   * 获得图文消息builder
-   */
-  public static NewsBuilder NEWS() {
-    return new NewsBuilder();
-  }
+    /**
+     * 获得图文消息builder
+     */
+    public static NewsBuilder NEWS() {
+        return new NewsBuilder();
+    }
 
-  /**
-   * 获得客服消息builder
-   */
-  public static TransferCustomerServiceBuilder TRANSFER_CUSTOMER_SERVICE() {
-    return new TransferCustomerServiceBuilder();
-  }
+    /**
+     * 获得客服消息builder
+     */
+    public static TransferCustomerServiceBuilder TRANSFER_CUSTOMER_SERVICE() {
+        return new TransferCustomerServiceBuilder();
+    }
 
-  public String getToUserName() {
-    return this.toUserName;
-  }
 
-  public void setToUserName(String toUserName) {
-    this.toUserName = toUserName;
-  }
+    @SuppressWarnings("unchecked")
+    public String toXml() {
+        return XStreamTransformer.toXml((Class<WxMpXmlOutMessage>) this.getClass(), this);
+    }
 
-  public String getFromUserName() {
-    return this.fromUserName;
-  }
+    /**
+     * 转换成加密的xml格式
+     */
+    public String toEncryptedXml(WxMpConfigStorage wxMpConfigStorage) {
+        String plainXml = toXml();
+        WxMpCryptUtil pc = new WxMpCryptUtil(wxMpConfigStorage);
+        return pc.encrypt(plainXml);
+    }
 
-  public void setFromUserName(String fromUserName) {
-    this.fromUserName = fromUserName;
-  }
+    /**
+     * 获取 是	接收方帐号（收到的OpenID）
+     */
+    public String getToUserName() {
+        return this.toUserName;
+    }
 
-  public Long getCreateTime() {
-    return this.createTime;
-  }
+    /**
+     * 设置 是	接收方帐号（收到的OpenID）
+     */
+    public void setToUserName(String toUserName) {
+        this.toUserName = toUserName;
+    }
 
-  public void setCreateTime(Long createTime) {
-    this.createTime = createTime;
-  }
+    /**
+     * 获取 是	开发者微信号
+     */
+    public String getFromUserName() {
+        return this.fromUserName;
+    }
 
-  public String getMsgType() {
-    return this.msgType;
-  }
+    /**
+     * 设置 是	开发者微信号
+     */
+    public void setFromUserName(String fromUserName) {
+        this.fromUserName = fromUserName;
+    }
 
-  public void setMsgType(String msgType) {
-    this.msgType = msgType;
-  }
+    /**
+     * 获取 是	消息创建时间 （整型）
+     */
+    public Long getCreateTime() {
+        return this.createTime;
+    }
 
-  @SuppressWarnings("unchecked")
-  public String toXml() {
-    return XStreamTransformer.toXml((Class<WxMpXmlOutMessage>) this.getClass(), this);
-  }
+    /**
+     * 设置 是	消息创建时间 （整型）
+     */
+    public void setCreateTime(Long createTime) {
+        this.createTime = createTime;
+    }
 
-  /**
-   * 转换成加密的xml格式
-   */
-  public String toEncryptedXml(WxMpConfigStorage wxMpConfigStorage) {
-    String plainXml = toXml();
-    WxMpCryptUtil pc = new WxMpCryptUtil(wxMpConfigStorage);
-    return pc.encrypt(plainXml);
-  }
+    /**
+     * 获取 是	news
+     */
+    public String getMsgType() {
+        return this.msgType;
+    }
+
+    /**
+     * 设置 是	news
+     */
+    public void setMsgType(String msgType) {
+        this.msgType = msgType;
+    }
 }
