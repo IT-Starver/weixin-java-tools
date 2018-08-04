@@ -1,9 +1,11 @@
 package me.chanjar.weixin.cp.api;
 
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.cp.bean.WxCpInviteResult;
 import me.chanjar.weixin.cp.bean.WxCpUser;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <pre>
@@ -80,4 +82,56 @@ public interface WxCpUserService {
    * @param userid 用户id
    */
   WxCpUser getById(String userid) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 邀请成员
+   * 企业可通过接口批量邀请成员使用企业微信，邀请后将通过短信或邮件下发通知。
+   * 请求方式：POST（HTTPS）
+   * 请求地址： https://qyapi.weixin.qq.com/cgi-bin/batch/invite?access_token=ACCESS_TOKEN
+   * 文档地址：https://work.weixin.qq.com/api/doc#12543
+   * </pre>
+   *
+   * @param userIds  成员ID列表, 最多支持1000个。
+   * @param partyIds 部门ID列表，最多支持100个。
+   * @param tagIds   标签ID列表，最多支持100个。
+   */
+  WxCpInviteResult invite(List<String> userIds, List<String> partyIds, List<String> tagIds) throws WxErrorException;
+
+  /**
+   * <pre>
+   *  userid转openid.
+   *  该接口使用场景为微信支付、微信红包和企业转账。
+   *
+   * 在使用微信支付的功能时，需要自行将企业微信的userid转成openid。
+   * 在使用微信红包功能时，需要将应用id和userid转成appid和openid才能使用。
+   * 注：需要成员使用微信登录企业微信或者关注微信插件才能转成openid
+   *
+   * 文档地址：https://work.weixin.qq.com/api/doc#11279
+   * </pre>
+   *
+   * @param userId  企业内的成员id
+   * @param agentId 非必填，整型，仅用于发红包。其它场景该参数不要填，如微信支付、企业转账、电子发票
+   * @return map对象，可能包含以下值：
+   * - openid	企业微信成员userid对应的openid，若有传参agentid，则是针对该agentid的openid。否则是针对企业微信corpid的openid
+   * - appid	应用的appid，若请求包中不包含agentid则不返回appid。该appid在使用微信红包时会用到
+   */
+  Map<String, String> userId2Openid(String userId, Integer agentId) throws WxErrorException;
+
+  /**
+   * <pre>
+   * openid转userid
+   *
+   * 该接口主要应用于使用微信支付、微信红包和企业转账之后的结果查询。
+   * 开发者需要知道某个结果事件的openid对应企业微信内成员的信息时，可以通过调用该接口进行转换查询。
+   * 权限说明：
+   * 管理组需对openid对应的企业微信成员有查看权限。
+   *
+   * 文档地址：https://work.weixin.qq.com/api/doc#11279
+   * </pre>
+   *
+   * @param openid 在使用微信支付、微信红包和企业转账之后，返回结果的openid
+   * @return userid 该openid在企业微信对应的成员userid
+   */
+  String openid2UserId(String openid) throws WxErrorException;
 }

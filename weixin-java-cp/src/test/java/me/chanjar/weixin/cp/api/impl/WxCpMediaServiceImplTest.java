@@ -3,7 +3,7 @@ package me.chanjar.weixin.cp.api.impl;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.TestConstants;
 import me.chanjar.weixin.cp.api.WxCpService;
@@ -34,11 +34,11 @@ public class WxCpMediaServiceImplTest {
   @DataProvider
   public Object[][] mediaData() {
     return new Object[][]{
-      new Object[]{WxConsts.MEDIA_IMAGE, TestConstants.FILE_JPG, "mm.jpeg"},
-      new Object[]{WxConsts.MEDIA_VOICE, TestConstants.FILE_MP3, "mm.mp3"},
-      new Object[]{WxConsts.MEDIA_VOICE, TestConstants.FILE_AMR, "mm.amr"},//{"errcode":301017,"errmsg":"voice file only support amr like myvoice.amr"}
-      new Object[]{WxConsts.MEDIA_VIDEO, TestConstants.FILE_MP4, "mm.mp4"},
-      new Object[]{WxConsts.MEDIA_FILE, TestConstants.FILE_JPG, "mm.jpeg"}
+      new Object[]{WxConsts.MediaFileType.IMAGE, TestConstants.FILE_JPG, "mm.jpeg"},
+      new Object[]{WxConsts.MediaFileType.VOICE, TestConstants.FILE_MP3, "mm.mp3"},
+      new Object[]{WxConsts.MediaFileType.VOICE, TestConstants.FILE_AMR, "mm.amr"},//{"errcode":301017,"errmsg":"voice file only support amr like myvoice.amr"}
+      new Object[]{WxConsts.MediaFileType.VIDEO, TestConstants.FILE_MP4, "mm.mp4"},
+      new Object[]{WxConsts.MediaFileType.FILE, TestConstants.FILE_JPG, "mm.jpeg"}
     };
   }
 

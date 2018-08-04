@@ -3,7 +3,7 @@ package me.chanjar.weixin.cp.api.impl;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonHelper;
 import me.chanjar.weixin.cp.api.WxCpDepartmentService;
 import me.chanjar.weixin.cp.api.WxCpService;
@@ -48,13 +48,13 @@ public class WxCpDepartmentServiceImpl implements WxCpDepartmentService {
   }
 
   @Override
-  public List<WxCpDepart> listAll() throws WxErrorException {
+  public List<WxCpDepart> list(Integer id) throws WxErrorException {
     String url = "https://qyapi.weixin.qq.com/cgi-bin/department/list";
+    if (id != null) {
+      url += "?id=" + id;
+    }
+
     String responseContent = this.mainService.get(url, null);
-    /*
-     * 操蛋的微信API，创建时返回的是 { group : { id : ..., name : ...} }
-     * 查询时返回的是 { groups : [ { id : ..., name : ..., count : ... }, ... ] }
-     */
     JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
     return WxCpGsonBuilder.INSTANCE.create()
       .fromJson(tmpJsonElement.getAsJsonObject().get("department"),

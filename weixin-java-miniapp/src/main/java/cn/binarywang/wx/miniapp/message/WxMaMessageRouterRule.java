@@ -3,7 +3,7 @@ package cn.binarywang.wx.miniapp.message;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaMessage;
 import me.chanjar.weixin.common.api.WxErrorExceptionHandler;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 
 import java.util.ArrayList;
@@ -196,7 +196,7 @@ public class WxMaMessageRouterRule {
                          WxSessionManager sessionManager,
                          WxErrorExceptionHandler exceptionHandler) {
     if (context == null) {
-      context = new HashMap<>();
+      context = new HashMap<>(16);
     }
 
     try {

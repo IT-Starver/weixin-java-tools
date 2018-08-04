@@ -12,7 +12,7 @@ import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
 import cn.binarywang.wx.miniapp.test.TestConfig;
 import com.google.common.collect.Lists;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;
@@ -34,7 +34,7 @@ public class WxMaDemoServer {
     public void handle(WxMaMessage wxMessage, Map<String, Object> context,
                        WxMaService service, WxSessionManager sessionManager) throws WxErrorException {
       System.out.println("收到消息：" + wxMessage.toString());
-      service.getMsgService().sendKefuMsg(WxMaKefuMessage.TEXT().content("收到信息为：" + wxMessage.toJson())
+      service.getMsgService().sendKefuMsg(WxMaKefuMessage.newTextBuilder().content("收到信息为：" + wxMessage.toJson())
         .toUser(wxMessage.getFromUser()).build());
     }
   };
@@ -44,7 +44,7 @@ public class WxMaDemoServer {
     public void handle(WxMaMessage wxMessage, Map<String, Object> context,
                        WxMaService service, WxSessionManager sessionManager)
       throws WxErrorException {
-      service.getMsgService().sendKefuMsg(WxMaKefuMessage.TEXT().content("回复文本消息")
+      service.getMsgService().sendKefuMsg(WxMaKefuMessage.newTextBuilder().content("回复文本消息")
         .toUser(wxMessage.getFromUser()).build());
     }
 
@@ -60,7 +60,7 @@ public class WxMaDemoServer {
             ClassLoader.getSystemResourceAsStream("tmp.png"));
         service.getMsgService().sendKefuMsg(
           WxMaKefuMessage
-            .IMAGE()
+            .newImageBuilder()
             .mediaId(uploadResult.getMediaId())
             .toUser(wxMessage.getFromUser())
             .build());
@@ -79,7 +79,7 @@ public class WxMaDemoServer {
         WxMediaUploadResult uploadResult = service.getMediaService().uploadMedia(WxMaConstants.MediaType.IMAGE, file);
         service.getMsgService().sendKefuMsg(
           WxMaKefuMessage
-            .IMAGE()
+            .newImageBuilder()
             .mediaId(uploadResult.getMediaId())
             .toUser(wxMessage.getFromUser())
             .build());
@@ -94,7 +94,7 @@ public class WxMaDemoServer {
     public void handle(WxMaMessage wxMessage, Map<String, Object> context,
                        WxMaService service, WxSessionManager sessionManager)
       throws WxErrorException {
-      service.getMsgService().sendTemplateMsg(WxMaTemplateMessage.newBuilder()
+      service.getMsgService().sendTemplateMsg(WxMaTemplateMessage.builder()
         .templateId(templateId).data(Lists.newArrayList(
           new WxMaTemplateMessage.Data("keyword1", "339208499", "#173177")))
         .toUser(wxMessage.getFromUser())

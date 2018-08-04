@@ -1,23 +1,21 @@
 package me.chanjar.weixin.mp.api.impl;
 
+import me.chanjar.weixin.common.WxType;
 import me.chanjar.weixin.common.bean.WxAccessToken;
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
-import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
 import okhttp3.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.concurrent.locks.Lock;
 
-public class WxMpServiceOkHttpImpl extends WxMpServiceAbstractImpl<OkHttpClient, OkHttpProxyInfo> {
-
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
+/**
+ * okhttp实现
+ */
+public class WxMpServiceOkHttpImpl extends BaseWxMpServiceImpl<OkHttpClient, OkHttpProxyInfo> {
   private OkHttpClient httpClient;
   private OkHttpProxyInfo httpProxy;
 
@@ -38,7 +36,7 @@ public class WxMpServiceOkHttpImpl extends WxMpServiceAbstractImpl<OkHttpClient,
 
   @Override
   public String getAccessToken(boolean forceRefresh) throws WxErrorException {
-    logger.debug("WxMpServiceOkHttpImpl is running");
+    this.log.debug("WxMpServiceOkHttpImpl is running");
     Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
     try {
       lock.lock();
@@ -50,7 +48,7 @@ public class WxMpServiceOkHttpImpl extends WxMpServiceAbstractImpl<OkHttpClient,
         Request request = new Request.Builder().url(url).get().build();
         Response response = getRequestHttpClient().newCall(request).execute();
         String resultContent = response.body().string();
-        WxError error = WxError.fromJson(resultContent);
+        WxError error = WxError.fromJson(resultContent, WxType.MP);
         if (error.getErrorCode() != 0) {
           throw new WxErrorException(error);
         }
@@ -59,7 +57,7 @@ public class WxMpServiceOkHttpImpl extends WxMpServiceAbstractImpl<OkHttpClient,
           accessToken.getExpiresIn());
       }
     } catch (IOException e) {
-      e.printStackTrace();
+      this.log.error(e.getMessage(), e);
     } finally {
       lock.unlock();
     }
@@ -68,14 +66,17 @@ public class WxMpServiceOkHttpImpl extends WxMpServiceAbstractImpl<OkHttpClient,
 
   @Override
   public void initHttp() {
-    logger.debug("WxMpServiceOkHttpImpl initHttp");
-    WxMpConfigStorage configStorage = this.getWxMpConfigStorage();
+    this.log.debug("WxMpServiceOkHttpImpl initHttp");
 
-    if (configStorage.getHttpProxyHost() != null && configStorage.getHttpProxyPort() > 0) {
-      httpProxy = OkHttpProxyInfo.socks5Proxy(configStorage.getHttpProxyHost(), configStorage.getHttpProxyPort(), configStorage.getHttpProxyUsername(), configStorage.getHttpProxyPassword());
-    }
-    OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
     //设置代理
+    if (wxMpConfigStorage.getHttpProxyHost() != null && wxMpConfigStorage.getHttpProxyPort() > 0) {
+      httpProxy = OkHttpProxyInfo.httpProxy(wxMpConfigStorage.getHttpProxyHost(),
+        wxMpConfigStorage.getHttpProxyPort(),
+        wxMpConfigStorage.getHttpProxyUsername(),
+        wxMpConfigStorage.getHttpProxyPassword());
+    }
+
+    OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
     if (httpProxy != null) {
       clientBuilder.proxy(getRequestHttpProxy().getProxy());
 

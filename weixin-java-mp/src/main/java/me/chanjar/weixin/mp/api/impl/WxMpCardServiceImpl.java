@@ -7,8 +7,8 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.reflect.TypeToken;
 import me.chanjar.weixin.common.bean.WxCardApiSignature;
 import me.chanjar.weixin.common.bean.card.WxCard;
-import me.chanjar.weixin.common.bean.result.WxError;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxError;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.RandomUtils;
 import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
@@ -69,9 +69,11 @@ public class WxMpCardServiceImpl implements WxMpCardService {
         Lock lock = getWxMpService().getWxMpConfigStorage().getCardApiTicketLock();
         try {
             lock.lock();
+
             if (forceRefresh) {
                 this.getWxMpService().getWxMpConfigStorage().expireCardApiTicket();
             }
+
             if (this.getWxMpService().getWxMpConfigStorage().isCardApiTicketExpired()) {
                 String responseContent = this.wxMpService.execute(SimpleGetRequestExecutor.create(this.getWxMpService().getRequestHttp()), CARD_GET_TICKET, null);
                 JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
@@ -212,7 +214,7 @@ public class WxMpCardServiceImpl implements WxMpCardService {
         WxMpCardResult cardResult = WxMpGsonBuilder.INSTANCE.create().fromJson(tmpJsonElement,
                 new TypeToken<WxMpCardResult>() {
                 }.getType());
-        if (!cardResult.getErrorCode().equals("0")) {
+        if (!"0".equals(cardResult.getErrorCode())) {
             this.log.warn("朋友的券mark失败：{}", cardResult.getErrorMsg());
         }
     }
@@ -228,10 +230,9 @@ public class WxMpCardServiceImpl implements WxMpCardService {
         String errcode = json.get("errcode").getAsString();
         if (!"0".equals(errcode)) {
             String errmsg = json.get("errmsg").getAsString();
-            WxError error = new WxError();
-            error.setErrorCode(Integer.valueOf(errcode));
-            error.setErrorMsg(errmsg);
-            throw new WxErrorException(error);
+            throw new WxErrorException(WxError.builder()
+                    .errorCode(Integer.valueOf(errcode)).errorMsg(errmsg)
+                    .build());
         }
 
         return responseContent;
@@ -245,12 +246,10 @@ public class WxMpCardServiceImpl implements WxMpCardService {
         String errcode = json.get("errcode").getAsString();
         if (!"0".equals(errcode)) {
             String errmsg = json.get("errmsg").getAsString();
-            WxError error = new WxError();
-            error.setErrorCode(Integer.valueOf(errcode));
-            error.setErrorMsg(errmsg);
-            throw new WxErrorException(error);
+            throw new WxErrorException(WxError.builder()
+                    .errorCode(Integer.valueOf(errcode)).errorMsg(errmsg)
+                    .build());
         }
-
         return responseContent;
     }
 }

@@ -1,7 +1,7 @@
 package me.chanjar.weixin.mp.api.impl;
 
 import com.google.gson.JsonObject;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMassMessageService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.*;
@@ -51,13 +51,13 @@ public class WxMpMassMessageServiceImpl implements WxMpMassMessageService {
   }
 
   @Override
-  public WxMpMassSendResult massMessagePreview(WxMpMassPreviewMessage wxMpMassPreviewMessage) throws Exception {
+  public WxMpMassSendResult massMessagePreview(WxMpMassPreviewMessage wxMpMassPreviewMessage) throws WxErrorException {
     String responseContent = this.wxMpService.post(MESSAGE_MASS_PREVIEW_URL, wxMpMassPreviewMessage.toJson());
     return WxMpMassSendResult.fromJson(responseContent);
   }
 
   @Override
-  public void delete(Integer msgId, Integer articleIndex) throws Exception {
+  public void delete(Long msgId, Integer articleIndex) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("msg_id", msgId);
     jsonObject.addProperty("article_idx", articleIndex);
